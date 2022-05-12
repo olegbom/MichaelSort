@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Text;
+using MichaelSort;
 
 Dictionary<int, int> data = new()
 {
@@ -122,6 +123,16 @@ Dictionary<int, int> data = new()
     [105] = 1383,
     [112] = 1377,
 };
+
+var tempCells = data.Select(pair => new Cell(pair.Key, pair.Value)).ToArray();
+tempCells.Shuffle();
+data = new Dictionary<int, int>();
+foreach (var cell in tempCells)
+{
+    data[cell.Index] = cell.Capacity;
+}
+
+
 double avg = (double)data.Sum(x => x.Value)/ data.Count;
 int idealSum = (int)Math.Round(avg * 9);
 Console.WriteLine($"Average assembly capacity: {avg*9:F2} mA*h");
@@ -338,10 +349,3 @@ public class Battery
         return sb.ToString();
     }
 }
-
-
-
-
-
-
-
